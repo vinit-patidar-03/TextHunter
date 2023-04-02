@@ -52,19 +52,19 @@ export default function TextForm(props) {
     }
     return (
         <div className={`my-5 text-${props.Mode==='light'?'black':'white'}`}>
-            <h3>{props.heading}</h3>
+            <h3 style={{textShadow: '2px 2px 2px pink'}}>{props.heading}</h3>
             <div className="mb-3 my-4">
                 <textarea className="form-control" onChange={change} id="exampleFormControlTextarea1" style={{backgroundColor: props.Mode==='light'?'white':'whitesmoke',color:'black'}} value={text} rows="5" placeholder='Enter Your Text here'></textarea>
             </div>
-            <button className="btn btn-primary mx-1 my-1" disabled={text.length===0} onClick={convert1}>Convert to UpperCase</button>
-            <button className="btn btn-primary mx-1 my-1" disabled={text.length===0} onClick={convert2}>Convert to LowerCase</button>
-            <button className="btn btn-primary mx-1 my-1" disabled={text.length===0} onClick={clear}>Clear</button>
-            <button className="btn btn-primary mx-1 my-1" disabled={text.length===0} onClick={copy}>Copy Text</button>
-            <button className="btn btn-primary mx-1 my-1" disabled={text.length===0} onClick={remove}>Remove Extra Spaces</button>
-            <h2 className='my-5'>Summary of Your Text</h2>
+            <button className={`btn btn-${props.Mode==='light'?'primary':'danger'} mx-1 my-1`} disabled={text.length===0} onClick={convert1}>Convert to UpperCase</button>
+            <button className={`btn btn-${props.Mode==='light'?'primary':'danger'} mx-1 my-1`} disabled={text.length===0} onClick={convert2}>Convert to LowerCase</button>
+            <button className={`btn btn-${props.Mode==='light'?'primary':'danger'} mx-1 my-1`} disabled={text.length===0} onClick={clear}>Clear</button>
+            <button className={`btn btn-${props.Mode==='light'?'primary':'danger'} mx-1 my-1`} disabled={text.length===0} onClick={copy}>Copy Text</button>
+            <button className={`btn btn-${props.Mode==='light'?'primary':'danger'} mx-1 my-1`} disabled={text.length===0} onClick={remove}>Remove Extra Spaces</button>
+            <h2 className='my-5' style={{textShadow: '2px 2px 2px pink'}}>Summary of Your Text</h2>
             <p>{word(text)} Words, {text.length} Characters</p>
             <p>{0.008 * word(text)} is time required to read complete paragraph</p>
-            <h2 className='my-5'>Preview</h2>
+            <h2 className='my-5' style={{textShadow: '2px 2px 2px pink'}}>Preview</h2>
             <p>{preview(text)}</p>
         </div>
     )

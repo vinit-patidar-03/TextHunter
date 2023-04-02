@@ -29,7 +29,7 @@ function App() {
     if(Mode==='light')
     {
       setMode('dark');
-      document.body.style.backgroundColor='#393053';
+      document.body.style.background='black';
       showAlert('Dark mode has been enabled','success');
       setTimeout(() => {
         setAlert(null);
@@ -38,7 +38,7 @@ function App() {
     else
     {
       setMode('light');
-      document.body.style.backgroundColor='white';
+      document.body.style.backgroundColor='#dbdadf';
       showAlert('light mode has been enabled','success');
       setTimeout(() => {
         setAlert(null);
