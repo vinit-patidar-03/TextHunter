@@ -11,6 +11,8 @@ export default function TextForm(props) {
   const [Find, setFind] = useState("");
   const [Replace, setReplace] = useState("");
   const [emails, setEmails] = useState("");
+  const [previousFind,setPreviousFind] = useState('');
+  const [previousReplace,setPreviousReplace] = useState('');
   const [voices, setVoices] = useState('');
   const [selectedVoice, setSelectedVoice] = useState(0)
 
@@ -86,10 +88,12 @@ export default function TextForm(props) {
 
   const Fchange = (event) => {
     setFind(event.target.value);
+    setPreviousFind(event.target.value);
   };
 
   const Rchange = (event) => {
     setReplace(event.target.value);
+    setPreviousReplace(event.target.value);
   };
 
   const FindandReplace = () => {
@@ -101,6 +105,8 @@ export default function TextForm(props) {
       closeref.current.click();
       showAlert("words replaced successfully", "success");
     }
+    setReplace('');
+    setFind('');
   };
 
   const Extractvoices = () => {
@@ -222,13 +228,13 @@ export default function TextForm(props) {
                   <label htmlFor="exampleInputEmail1" className="form-label">
                     Find
                   </label>
-                  <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={Fchange} />
+                  <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={Find} placeholder={previousFind} onChange={Fchange} />
                 </div>
                 <div className="mb-3">
                   <label htmlFor="exampleInputPassword1" className="form-label">
                     Replace
                   </label>
-                  <input type="text" className="form-control" id="exampleInputPassword1" onChange={Rchange} />
+                  <input type="text" className="form-control" id="exampleInputPassword1" value={Replace} placeholder={previousReplace} onChange={Rchange} />
                 </div>
                 <div className="mb-3 form-check"></div>
               </form>
@@ -250,7 +256,7 @@ export default function TextForm(props) {
 
       <div className="modal fade" id="exampleModal1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
-          <div className="modal-content">
+          <div className="modal-content" style={{ backgroundColor: props.Mode === "light" ? "white" : "grey", color: props.Mode === "light" ? "black" : "white", }}>
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">Emails and Links Found</h1>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
