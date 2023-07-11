@@ -1,5 +1,4 @@
 import React from 'react'
-import image from './logo.png'
 import { faMoon } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -8,7 +7,7 @@ export default function Navbar(props) {
     <nav className={`navbar navbar-expand-lg bg-primary navbar-light `}>
       <div className="container-fluid">
         <div>
-          <img src={image} alt="" width="50px" style={{ filter: 'invert()', marginLeft: '10px' }} />
+          <img src='/images/logo.png' alt="" width="50px" style={{ filter: 'invert()', marginLeft: '10px' }} />
         </div>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">

@@ -13,15 +13,13 @@ export default function TextForm(props) {
   const [voices, setVoices] = useState('');
   const [selectedVoice, setSelectedVoice] = useState(0)
 
-  console.log(selectedVoice);
   useEffect(() => {
     setTimeout(() => {
       Extractvoices();
-    }, 10);
+    }, 1000);
     Cancel();
   }, [])
 
-  console.log(voices);
   //UpperCase Conversion
   function convert1() {
     let newText = text.toUpperCase();
@@ -137,6 +135,7 @@ export default function TextForm(props) {
         return elem.includes('.com') || elem.includes('.in') || elem.includes('.app');
       })
     )
+    showAlert("Emails and Links found successfully", "success");
     ref.current.click();
   }
 
@@ -193,7 +192,7 @@ export default function TextForm(props) {
         </div>
       </div>
       <div className="d-flex justify-content-center">
-      <select name="voices" id="voices" className="h-25 w-25" onChange={(event) => { setSelectedVoice(event.target.value) }}>
+      <select name="voices" id="voices" style={{width:"300px"}} onChange={(event) => { setSelectedVoice(event.target.value) }}>
           <option value={0}>select voice</option>
           {voices &&
             voices.map((elem, index) => {
