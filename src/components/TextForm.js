@@ -6,6 +6,7 @@ export default function TextForm(props) {
   const [text, setText] = useState("");
   const { showAlert } = props;
   const ref = useRef(null);
+  const ref1 = useRef(null)
   const closeref = useRef(null);
   const [Find, setFind] = useState("");
   const [Replace, setReplace] = useState("");
@@ -136,7 +137,7 @@ export default function TextForm(props) {
       })
     )
     showAlert("Emails and Links found successfully", "success");
-    ref.current.click();
+    ref1.current.click();
   }
 
   console.log(emails);
@@ -204,9 +205,9 @@ export default function TextForm(props) {
       <hr />
 
       {/* modals for showing Find and Replace */}
-      <button type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal" ref={ref}></button>
+      <button type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#Modal" ref={ref}>Launch Button</button>
 
-      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal fade" id="Modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content" style={{ backgroundColor: props.Mode === "light" ? "white" : "grey", color: props.Mode === "light" ? "black" : "white", }}>
             <div className="modal-header">
@@ -245,7 +246,7 @@ export default function TextForm(props) {
       </div>
 
       {/* modal for showing Emails and Links */}
-      <button type="button" className="btn btn-primary d-none" data-bs-toggle="modal" ref={ref} data-bs-target="#exampleModal1"></button>
+      <button type="button" className="btn btn-primary d-none" data-bs-toggle="modal" ref={ref1} data-bs-target="#exampleModal1">Modal Button</button>
 
       <div className="modal fade" id="exampleModal1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
@@ -260,6 +261,7 @@ export default function TextForm(props) {
                   return <p className="mx-1" key={index}>{index + 1}) {elem}</p>;
                 })
               }
+              {emails.length === 0?<p>No Emails and Links found in provided Text</p>:''}
             </div>
           </div>
         </div>
