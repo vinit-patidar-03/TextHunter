@@ -14,7 +14,7 @@ export default function TextForm(props) {
   const [emails, setEmails] = useState("");
   const [previousFind,setPreviousFind] = useState('');
   const [previousReplace,setPreviousReplace] = useState('');
-  const [selectedVoice, setSelectedVoice] = useState(5)
+  const [selectedVoice, setSelectedVoice] = useState(0)
 
   useEffect(() => {
     Cancel();
