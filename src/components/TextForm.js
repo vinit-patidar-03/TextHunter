@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 
@@ -21,7 +22,8 @@ export default function TextForm(props) {
       Extractvoices();
     }, 1000);
     Cancel();
-  }, [])
+    ReadText();
+  }, [selectedVoice])
 
   //UpperCase Conversion
   function convert1() {
