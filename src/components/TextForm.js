@@ -14,12 +14,14 @@ export default function TextForm(props) {
   const [emails, setEmails] = useState("");
   const [previousFind,setPreviousFind] = useState('');
   const [previousReplace,setPreviousReplace] = useState('');
-  const [voices, setVoices] = useState('');
   const [selectedVoice, setSelectedVoice] = useState(5)
 
   useEffect(() => {
     Cancel();
-    ReadText();
+    setTimeout(()=>
+    {
+      ReadText();
+    },300)
   }, [selectedVoice])
 
   console.log(selectedVoice);
@@ -195,7 +197,7 @@ export default function TextForm(props) {
       </div>
       <div className="d-flex justify-content-center">
       <select name="voices" id="voices" style={{width:"300px"}} value={selectedVoice} onChange={(event) => { setSelectedVoice(event.target.value) }}>
-          <option value={0}>select voice</option>
+          <option value={-1}>select voice</option>
           {
             window.speechSynthesis.getVoices().map((elem, index) => {
               return <option value={index} key={index}>{elem.name}</option>
