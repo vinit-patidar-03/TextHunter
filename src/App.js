@@ -3,9 +3,9 @@ import './App.css';
 import Alert from './components/Alert';
 import Navbar from './components/Navbar';
 import TextForm from './components/TextForm';
-
-
+ 
 function App() {
+  
   const [Mode, setMode] = useState('light')
   const [alert, setAlert] = useState(null);
 
@@ -32,6 +32,7 @@ function App() {
       showAlert('light mode has been enabled', 'success');
     }
   }
+
   return (
     <>
       <Navbar title="TextImo" aboutText="About us" Mode={Mode} toggleMode={toggleMode} />
