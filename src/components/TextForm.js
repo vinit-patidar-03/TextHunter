@@ -19,10 +19,7 @@ export default function TextForm(props) {
 
   useEffect(() => {
     Cancel();
-    setTimeout(() => {
-      Extractvoices();
-    }, 1000);
-      ReadText();
+    ReadText();
   }, [selectedVoice])
 
   console.log(selectedVoice);
@@ -112,10 +109,6 @@ export default function TextForm(props) {
     setFind('');
   };
 
-  const Extractvoices = () => {
-    setVoices(window.speechSynthesis.getVoices());
-  }
-
   const ReadText = () => {
     var msg = new SpeechSynthesisUtterance();
     msg.text = text;
@@ -126,7 +119,7 @@ export default function TextForm(props) {
     window.speechSynthesis.speak(msg);
   }
 
-  const Cancel = () => {
+  const Cancel = () => { 
     window.speechSynthesis.cancel();
   }
 
@@ -203,8 +196,8 @@ export default function TextForm(props) {
       <div className="d-flex justify-content-center">
       <select name="voices" id="voices" style={{width:"300px"}} value={selectedVoice} onChange={(event) => { setSelectedVoice(event.target.value) }}>
           <option value={0}>select voice</option>
-          {voices &&
-            voices.map((elem, index) => {
+          {
+            window.speechSynthesis.getVoices().map((elem, index) => {
               return <option value={index} key={index}>{elem.name}</option>
             })
           }
