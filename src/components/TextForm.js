@@ -22,7 +22,10 @@ export default function TextForm(props) {
       Extractvoices();
     }, 1000);
     Cancel();
-    ReadText();
+    setTimeout(() =>
+    {
+      ReadText();
+    },2000)
   }, [selectedVoice])
 
   //UpperCase Conversion
