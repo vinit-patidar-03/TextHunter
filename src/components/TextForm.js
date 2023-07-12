@@ -122,7 +122,7 @@ export default function TextForm(props) {
     msg.volume = 1;
     msg.pitch = 1;
     msg.rate = 1;
-    // msg.voice = window.speechSynthesis.getVoices()[selectedVoice];
+    msg.voice = window.speechSynthesis.getVoices()[5];
     window.speechSynthesis.speak(msg);
   }
 
