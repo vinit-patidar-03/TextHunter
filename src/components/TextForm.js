@@ -115,7 +115,6 @@ export default function TextForm(props) {
 
   const ReadText = () => {
     var msg = new SpeechSynthesisUtterance();
-    msg.lang = 'en-IN';
     msg.text = text;
     msg.volume = 1;
     msg.pitch = 1;
@@ -203,7 +202,7 @@ export default function TextForm(props) {
           <option value={0}>select voice</option>
           {voices &&
             voices.map((elem, index) => {
-              return <option value={index + 1} key={index}>{elem.name}</option>
+              return <option value={index} key={index}>{elem.name}</option>
             })
           }
         </select>
@@ -264,7 +263,7 @@ export default function TextForm(props) {
             <div className="modal-body d-flex flex-wrap">
               {emails &&
                 emails.map((elem, index) => {
-                  return <p className="mx-1" key={index}>{index}) {elem}</p>;
+                  return <p className="mx-1" key={index}>{index+1}) {elem}</p>;
                 })
               }
               {emails.length === 0?<p>No Emails and Links found in provided Text</p>:''}
