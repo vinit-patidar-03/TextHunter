@@ -122,7 +122,7 @@ export default function TextForm(props) {
     msg.volume = 1;
     msg.pitch = 1;
     msg.rate = 1;
-    msg.voice = window.speechSynthesis.getVoices()[5];
+    msg.voice = window.speechSynthesis.getVoices()[selectedVoice];
     window.speechSynthesis.speak(msg);
   }
 
@@ -201,7 +201,7 @@ export default function TextForm(props) {
         </div>
       </div>
       <div className="d-flex justify-content-center">
-      <select name="voices" id="voices" style={{width:"300px"}} onChange={(event) => { setSelectedVoice(event.target.value) }}>
+      <select name="voices" id="voices" style={{width:"300px"}} value={selectedVoice} onChange={(event) => { setSelectedVoice(event.target.value) }}>
           <option value={0}>select voice</option>
           {voices &&
             voices.map((elem, index) => {
