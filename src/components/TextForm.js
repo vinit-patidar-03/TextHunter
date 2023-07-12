@@ -15,19 +15,17 @@ export default function TextForm(props) {
   const [previousFind,setPreviousFind] = useState('');
   const [previousReplace,setPreviousReplace] = useState('');
   const [voices, setVoices] = useState('');
-  const [selectedVoice, setSelectedVoice] = useState(0)
+  const [selectedVoice, setSelectedVoice] = useState(5)
 
   useEffect(() => {
+    Cancel();
     setTimeout(() => {
       Extractvoices();
     }, 1000);
-    Cancel();
-    setTimeout(() =>
-    {
       ReadText();
-    },2000)
   }, [selectedVoice])
 
+  console.log(selectedVoice);
   //UpperCase Conversion
   function convert1() {
     let newText = text.toUpperCase();
