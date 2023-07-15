@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
+import SpeechRecognition,{useSpeechRecognition} from "react-speech-recognition";
 
 export default function TextForm(props) {
   //Declarations
@@ -14,17 +15,21 @@ export default function TextForm(props) {
   const [emails, setEmails] = useState("");
   const [previousFind,setPreviousFind] = useState('');
   const [previousReplace,setPreviousReplace] = useState('');
-  const [selectedVoice, setSelectedVoice] = useState(0)
+   
+  const {
+    transcript,resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
 
   useEffect(() => {
     Cancel();
-    setTimeout(()=>
+    if(transcript !== '')
     {
-      ReadText();
-    },300)
-  }, [selectedVoice])
+      setText(transcript);
+    }
+  }, [transcript])
 
-  console.log(selectedVoice);
+
   //UpperCase Conversion
   function convert1() {
     let newText = text.toUpperCase();
@@ -53,12 +58,20 @@ export default function TextForm(props) {
   //For Clearing Text
   function clear() {
     setText("");
+    resetTranscript('');
     showAlert("text cleared successfully", "success");
   }
 
   //Setting Text in Text Variable Created Using setState
-  function change(event) {
+  function change1(event) {
     setText(event.target.value);
+  }
+
+  function change2(event){
+      if(event.key === 'Backspace')
+      {
+        resetTranscript(text);
+      }
   }
 
   //For Text Preview
@@ -117,9 +130,17 @@ export default function TextForm(props) {
     msg.volume = 1;
     msg.pitch = 1;
     msg.rate = 1;
-    msg.voice = window.speechSynthesis.getVoices()[selectedVoice];
+    msg.lang = 'en';
     window.speechSynthesis.speak(msg);
   }
+
+  const startRecognising = () => {
+    SpeechRecognition.startListening({ continuous: true });
+    if (!browserSupportsSpeechRecognition) {
+         return null;
+    }
+    showAlert('Start Speaking','warning')
+}
 
   const Cancel = () => { 
     window.speechSynthesis.cancel();
@@ -148,8 +169,11 @@ export default function TextForm(props) {
     <div className={`my-5 text-${props.Mode === "light" ? "black" : "white"}`}>
       <h3>{props.heading}</h3>
       <div className="mb-3 my-4">
-        <textarea className="form-control" onChange={change} id="exampleFormControlTextarea1" style={{ backgroundColor: props.Mode === "light" ? "white" : "whitesmoke", color: "black" }} value={text} rows="5" placeholder="Enter Your Text here"></textarea>
+        <textarea className="form-control" onChange={change1} onKeyUp={change2} id="exampleFormControlTextarea1" style={{ backgroundColor: props.Mode === "light" ? "white" : "whitesmoke", color: "black" }} value={text || transcript} rows="5" placeholder="Enter Your Text here"></textarea>
       </div>
+      <button className={`btn btn-${props.Mode === "light" ? "primary" : "danger"} mx-1 my-1`}  onClick={startRecognising}>
+        speak to Write
+      </button>
       <button className={`btn btn-${props.Mode === "light" ? "primary" : "danger"} mx-1 my-1`} disabled={text.length === 0} onClick={convert1}>
         Convert to UpperCase
       </button>
@@ -195,16 +219,6 @@ export default function TextForm(props) {
           </div>
         </div>
       </div>
-      <div className="d-flex justify-content-center">
-      <select name="voices" id="voices" style={{width:"300px"}} value={selectedVoice} onChange={(event) => { setSelectedVoice(event.target.value) }}>
-          <option value={-1}>select voice</option>
-          {
-            window.speechSynthesis.getVoices().map((elem, index) => {
-              return <option value={index} key={index}>{elem.name}</option>
-            })
-          }
-        </select>
-        </div>
       <hr />
 
       {/* modals for showing Find and Replace */}
