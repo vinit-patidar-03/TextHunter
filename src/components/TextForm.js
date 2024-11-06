@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
-import SpeechRecognition,{useSpeechRecognition} from "react-speech-recognition";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 
 export default function TextForm(props) {
   //Declarations
@@ -13,20 +13,27 @@ export default function TextForm(props) {
   const [Find, setFind] = useState("");
   const [Replace, setReplace] = useState("");
   const [emails, setEmails] = useState("");
-  const [previousFind,setPreviousFind] = useState('');
-  const [previousReplace,setPreviousReplace] = useState('');
-   
+  const [previousFind, setPreviousFind] = useState('');
+  const [previousReplace, setPreviousReplace] = useState('');
+
   const {
-    transcript,resetTranscript,
+    transcript, resetTranscript,
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
 
+  const stopRecognising = () => {
+    SpeechRecognition.stopListening();
+    showAlert('Stopped Listening', 'info');
+  };
+
   useEffect(() => {
-    Cancel();
-    if(transcript !== '')
-    {
+    if (transcript !== '') {
       setText(transcript);
     }
+    return () => {
+      Cancel();
+      stopRecognising();
+    };
   }, [transcript])
 
 
@@ -67,11 +74,10 @@ export default function TextForm(props) {
     setText(event.target.value);
   }
 
-  function change2(event){
-      if(event.key === 'Backspace')
-      {
-        resetTranscript(text);
-      }
+  function change2(event) {
+    if (event.key === 'Backspace') {
+      resetTranscript(text);
+    }
   }
 
   //For Text Preview
@@ -135,14 +141,15 @@ export default function TextForm(props) {
   }
 
   const startRecognising = () => {
-    SpeechRecognition.startListening({ continuous: true });
     if (!browserSupportsSpeechRecognition) {
-         return null;
+      return null;
     }
-    showAlert('Start Speaking','warning')
-}
+    SpeechRecognition.startListening();
+    showAlert('Start Speaking', 'warning')
+  }
 
-  const Cancel = () => { 
+
+  const Cancel = () => {
     window.speechSynthesis.cancel();
   }
 
@@ -171,7 +178,7 @@ export default function TextForm(props) {
       <div className="mb-3 my-4">
         <textarea className="form-control" onChange={change1} onKeyUp={change2} id="exampleFormControlTextarea1" style={{ backgroundColor: props.Mode === "light" ? "white" : "whitesmoke", color: "black" }} value={text || transcript} rows="5" placeholder="Enter Your Text here"></textarea>
       </div>
-      <button className={`btn btn-${props.Mode === "light" ? "primary" : "danger"} mx-1 my-1`}  onClick={startRecognising}>
+      <button className={`btn btn-${props.Mode === "light" ? "primary" : "danger"} mx-1 my-1`} onClick={startRecognising}>
         speak to Write
       </button>
       <button className={`btn btn-${props.Mode === "light" ? "primary" : "danger"} mx-1 my-1`} disabled={text.length === 0} onClick={convert1}>
@@ -275,10 +282,10 @@ export default function TextForm(props) {
             <div className="modal-body d-flex flex-wrap">
               {emails &&
                 emails.map((elem, index) => {
-                  return <p className="mx-1" key={index}>{index+1}) {elem}</p>;
+                  return <p className="mx-1" key={index}>{index + 1}) {elem}</p>;
                 })
               }
-              {emails.length === 0?<p>No Emails and Links found in provided Text</p>:''}
+              {emails.length === 0 ? <p>No Emails and Links found in provided Text</p> : ''}
             </div>
           </div>
         </div>
